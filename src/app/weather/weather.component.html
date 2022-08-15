@@ -1,9 +1,9 @@
 <div
-    class="mx-auto max-w-screen-sm mt-4 p-4 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400 rounded-3xl">
+    class="mx-auto max-w-screen-sm my-5 p-4 pb-8 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400 rounded-3xl">
 
 
     <!-- Top Buttons start-->
-    <div class="flex items-center justify-around mb-4 mt-2">
+    <div class="flex items-center justify-between mx-9 mb-4 mt-2">
         <ng-container *ngFor="let topButton of topButtons">
             <button class="text-white text-lg font-medium">{{ topButton.title }}</button>
         </ng-container>
@@ -81,7 +81,7 @@
                 <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
                     <i class="uil uil-temperature-half text-lg "></i>
                     <p class="text-sm">Feels like :</p>
-                    <p class="font-normal">30<span class="text-xs align-text-top">°C</span></p>
+                    <p class="font-normal">30°</p>
                 </div>
 
                 <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
@@ -109,14 +109,97 @@
             <p class="font-light">Set : <span class="font-normal">06:32 PM</span></p>
             <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
             <i class="uil uil-arrow-up"></i>
-            <p class="font-light">High : <span class="font-normal">27<span class="text-xs align-text-top">°C</span></span></p>
+            <p class="font-light">High : <span class="font-normal">27°</span></p>
             <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
             <i class="uil uil-arrow-down"></i>
-            <p class="font-light">Low : <span class="font-normal">24<span class="text-xs align-text-top">°C</span></span></p>
+            <p class="font-light">Low : <span class="font-normal">24°</span></p>
         </div>
         <!-- Today's Sun rise/set time and max/min temp end -->
 
     </div>
     <!-- Current temperature and current details end -->
+
+
+    <!-- Hourly Forcast start -->
+    <div class="flex flex-col mx-9">
+        <div class="flex items-center justify-start mt-4">
+            <p class="text-white font-medium uppercase">hourly forecast</p>
+        </div>
+        <hr class="my-1">
+        <div class="flex flex-row items-center justify-between text-white">
+
+            <ng-container >
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm">04:30 PM</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm">04:30 PM</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm">04:30 PM</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm">04:30 PM</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm">04:30 PM</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+    <!-- Hourly Forcast end -->
+
+
+    <!-- Daily Forcast start -->
+    <div class="flex flex-col mx-9">
+        <div class="flex items-center justify-start mt-4">
+            <p class="text-white font-medium uppercase">daily forcast</p>
+        </div>
+        <hr class="my-1">
+        <div class="flex flex-row items-center justify-between text-white">
+
+            <ng-container >
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm capitalize">wed</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm capitalize">thu</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm capitalize">fri</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm capitalize">sat</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm capitalize">sun</p>
+                    <img src="https://openweathermap.org/img/wn/10d.png" alt="">
+                    <p class="font-medium">22°</p>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+    <!-- Daily Forcast end -->
+
 
 </div>
