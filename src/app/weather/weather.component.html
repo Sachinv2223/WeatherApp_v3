@@ -1,9 +1,9 @@
 <div
-    class="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400">
-    
+    class="mx-auto max-w-screen-sm mt-4 p-4 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400 rounded-3xl">
+
 
     <!-- Top Buttons start-->
-    <div class="flex items-center justify-around my-4">
+    <div class="flex items-center justify-around mb-4 mt-2">
         <ng-container *ngFor="let topButton of topButtons">
             <button class="text-white text-lg font-medium">{{ topButton.title }}</button>
         </ng-container>
@@ -48,7 +48,7 @@
         <div class="flex flex-row items-center justify-center my-4 space-x-2">
             <div class="text-white font-light text-xl ">Tuesday, 31 May 2022</div>
             <div class="w-[2px] bg-white h-3/5 text-white font-thin">.</div>
-            <div class="text-white font-light text-xl ">Local time  12:46 PM</div>
+            <div class="text-white font-light text-xl ">Local time 12:46 PM</div>
         </div>
         <!-- Date and Time end -->
 
@@ -61,7 +61,7 @@
 
 
     <!-- Current temperature and current details start -->
-    <div>
+    <div class="flex flex-col">
 
         <!--current weather comment start -->
         <div class="flex items-center justify-center py-4 text-xl text-cyan-300">
@@ -81,24 +81,40 @@
                 <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
                     <i class="uil uil-temperature-half text-lg "></i>
                     <p class="text-sm">Feels like :</p>
-                    <p class="font-normal">30<span class="text-xs align-text-top">°C</span></p> 
+                    <p class="font-normal">30<span class="text-xs align-text-top">°C</span></p>
                 </div>
-                
+
                 <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
                     <i class="uil uil-tear text-lg "></i>
                     <p class="text-sm">Humidty :</p>
-                    <p class="font-normal">40%</p> 
+                    <p class="font-normal">40%</p>
                 </div>
 
                 <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
                     <i class="uil uil-windsock text-lg"></i>
                     <p class="text-sm">Wind :</p>
-                    <p class="font-normal">10 m/s</p> 
+                    <p class="font-normal">10 m/s</p>
                 </div>
-               
+
             </div>
         </div>
         <!--current weather details end-->
+
+        <!-- Today's Sun rise/set time and max/min temp start -->
+        <div class="flex flex-row items-center justify-center space-x-3 text-white text-sm pb-2">
+            <i class="uil uil-sun"></i>
+            <p class="font-light">Rise : <span class="font-normal">06:45 AM</span></p>
+            <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
+            <i class="uil uil-sunset"></i>
+            <p class="font-light">Set : <span class="font-normal">06:32 PM</span></p>
+            <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
+            <i class="uil uil-arrow-up"></i>
+            <p class="font-light">High : <span class="font-normal">27<span class="text-xs align-text-top">°C</span></span></p>
+            <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
+            <i class="uil uil-arrow-down"></i>
+            <p class="font-light">Low : <span class="font-normal">24<span class="text-xs align-text-top">°C</span></span></p>
+        </div>
+        <!-- Today's Sun rise/set time and max/min temp end -->
 
     </div>
     <!-- Current temperature and current details end -->
