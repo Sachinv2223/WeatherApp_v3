@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { topButton } from 'src/app/model/topButton.model';
+import { WeatherData } from '../model/weather.model';
 import { WeatherService } from '../services/weather.service';
 
 @Component({
@@ -12,8 +13,32 @@ export class WeatherComponent implements OnInit {
   constructor(private wService: WeatherService) { }
 
   ngOnInit(): void {
-    this.fetchWeather('Kollam', 'metric');
+    this.fetchWeather('Kochi');
   }
+
+  data ?: WeatherData;
+  weatherIconUrl:any = '';
+  units:string = 'metric';
+  // currentDateTime:any;
+  // currentDate:any;
+  // currentTime:any;
+  // sunRise:any;
+  // sunSet:any;
+
+
+  fetchWeather = async (city: string, units: string = 'metric') => {
+    this.data = await this.wService.getFormattedWeatherData({ q: city, units: units });
+    this.units = units;
+    // this.currentDateTime = this.wService.formatToLocalTime(this.data.dt,this.data.timezone);
+    // this.currentDate = this.wService.formatToLocalTime(this.data.dt,this.data.timezone,"cccc, dd LLL yyyy");
+    // this.currentTime = this.wService.formatToLocalTime(this.data.dt,this.data.timezone,"hh:mm a");
+
+    // this.sunRise = this.wService.formatToLocalTime(this.data.sunrise,this.data.timezone,"hh:mm a");
+    // this.sunSet = this.wService.formatToLocalTime(this.data.sunset,this.data.timezone,"hh:mm a");
+    console.log(this.data);
+    this.weatherIconUrl = this.wService.getWeatherIcon(this.data.icon);
+  }
+
 
   topButtons: topButton[] = [{
     id: 1,
@@ -35,12 +60,4 @@ export class WeatherComponent implements OnInit {
     id: 5,
     title: 'Paris'
   }]
-
-  fetchWeather = async (city: string, units: string) => {
-    const data = await this.wService.getFormattedWeatherData({ q: city, units: units });
-    console.log(data);
-  }
-
-
-
 }

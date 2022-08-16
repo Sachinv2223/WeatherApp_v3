@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { last, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { WeatherData } from '../model/weather.model';
-import { UrlHandlingStrategy } from '@angular/router';
 import { DateTime } from "luxon";
 
 @Injectable({
@@ -22,19 +21,26 @@ export class WeatherService {
   };
 
 
-  //Destructuring the given data according to our needs (refer: "Destructuring in js/ts")
+  //Destructuring the given data according to our needs 
+  //*(refer: "Destructuring in js/ts")
   formatCurrentWeather = (data: any) => {
     const {
       coord: { lat, lon },
       main: { temp, feels_like, temp_min, temp_max, humidity },
       name,
       dt,
+      // timezone,  //!<= this is timezone "name" (thats y below fns arent working properly), 
+                    //TODO here we should use timezone_offset as per json format 
       sys: { country, sunrise, sunset },
       weather,
       wind: { speed }
     } = data;
 
     const { main: details, description, icon } = weather[0];
+
+    //// const currentTimeDate = this.formatToLocalTime(dt,timezone);
+    //// const currentTime = this.formatToLocalTime(dt, timezone, "hh:mm a");
+    //// const currentDate = this.formatToLocalTime(dt, timezone, "cccc, dd LLL yyyy");
 
     return { lat, lon, temp, feels_like, temp_min, temp_max, humidity, name, dt, country, sunrise, sunset, details, speed, description, icon };
   }
@@ -81,19 +87,21 @@ export class WeatherService {
       units: searchParams.units
     }).then(data => this.formatForecastWeather(data));
 
-    return { ...formattedCurrentWeather, ...formattedForecastWeather };
+    const currentTime = this.formatToLocalTime(formattedCurrentWeather.dt, formattedForecastWeather.timezone, "hh:mm a");
+    const currentDate = this.formatToLocalTime(formattedCurrentWeather.dt, formattedForecastWeather.timezone, "cccc, dd LLL yyyy");
+
+    const sunRiseTime = this.formatToLocalTime(formattedCurrentWeather.sunrise, formattedForecastWeather.timezone, "hh:mm a");
+    const sunSetTime = this.formatToLocalTime(formattedCurrentWeather.sunset, formattedForecastWeather.timezone, "hh:mm a");
+
+    return { ...formattedCurrentWeather, ...formattedForecastWeather, currentDate, currentTime, sunRiseTime, sunSetTime };
   }
 
-  //For formating timestamp to localtime using luxon
-  formatToLocalTime = (secs: any, zone: any, format: any = "cccc,dd LLL yyyy' | Local time: 'hh:mm a") => (
+  //For formating timestamp to localtime //! using luxon
+  formatToLocalTime = (secs: any, zone: any, format: any = "cccc, dd LLL yyyy' | Local time: 'hh:mm a") => (
     DateTime.fromSeconds(secs).setZone(zone).toFormat(format))
 
-  getIconUrlForCurrent = (code:any) => {
+  getWeatherIcon = (code: any) => {
     return `http://openweathermap.org/img/wn/${code}@2x.png`;
-  }
-
-  getIconUrlForForecast = (code:any) => {
-    return `http://openweathermap.org/img/wn/${code}.png`;
   }
 
 
