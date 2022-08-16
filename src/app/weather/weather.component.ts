@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { topButton } from 'src/app/model/topButton.model';
+import { WeatherService } from '../services/weather.service';
 
 @Component({
   selector: 'app-weather',
@@ -8,9 +9,10 @@ import { topButton } from 'src/app/model/topButton.model';
 })
 export class WeatherComponent implements OnInit {
 
-  constructor() { }
+  constructor(private wService: WeatherService) { }
 
   ngOnInit(): void {
+    this.fetchWeather('Kollam', 'metric');
   }
 
   topButtons: topButton[] = [{
@@ -34,6 +36,11 @@ export class WeatherComponent implements OnInit {
     title: 'Paris'
   }]
 
-  
+  fetchWeather = async (city: string, units: string) => {
+    const data = await this.wService.getFormattedWeatherData({ q: city, units: units });
+    console.log(data);
+  }
+
+
 
 }
