@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { WeatherData } from '../model/weather.model';
 import { DateTime } from "luxon";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +14,13 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   //using FETCH method and url generation
-  getWeatherData(infoType: string, searchParams: any) {
+  async getWeatherData(infoType: string, searchParams: any) {
     const finalUrl = new URL(environment.weatherApiBaseUrl + "/" + infoType);
     finalUrl.search = <any>new URLSearchParams({ ...searchParams, apiKey: environment.ApiKey });
 
-    return fetch(finalUrl).then((res) => res.json()).then((data) => data);
+    const res = await fetch(finalUrl);
+    const data = await res.json();
+    return data;
   };
 
 
@@ -30,7 +33,7 @@ export class WeatherService {
       name,
       dt,
       // timezone,  //!<= this is timezone "name" (thats y below fns arent working properly), 
-                    //TODO here we should use timezone_offset as per json format 
+      //TODO here we should use timezone_offset as per json format 
       sys: { country, sunrise, sunset },
       weather,
       wind: { speed }
@@ -55,7 +58,7 @@ export class WeatherService {
 
     daily = daily.slice(1, 6).map((d: any) => {
       return {
-        title: this.formatToLocalTime(d.dt, timezone, 'ccc'),
+        title: this.formatToLocalTime(d.dt, timezone, 'ccc, dd'),
         temp: d.temp.day,
         icon: d.weather[0].icon
       }
@@ -103,6 +106,7 @@ export class WeatherService {
   getWeatherIcon = (code: any) => {
     return `http://openweathermap.org/img/wn/${code}@2x.png`;
   }
+
 
 
 

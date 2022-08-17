@@ -7,3 +7,32 @@
 *{
     font-family: 'Poppins', sans-serif;
 }
+
+@layer components{
+    .cold{
+        @apply bg-gradient-to-br from-cyan-700 to-blue-700;
+    }
+}
+
+@layer components{
+    .hot{
+        @apply bg-gradient-to-br from-yellow-700 to-orange-700;
+    }
+}
+
+@layer components{
+    .hotText{
+        @apply text-yellow-300;
+    }
+}
+
+@layer components{
+    .coldText{
+        @apply text-cyan-300;
+    }
+}
+
+body{
+    min-width: 700px;
+    width: auto;
+}

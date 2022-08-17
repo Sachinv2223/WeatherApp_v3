@@ -1,212 +1,205 @@
-<div
-    class="mx-auto max-w-screen-sm my-5 p-4 pb-8 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400 rounded-3xl" *ngIf="data">
+<div class="m-0 p-0" *ngIf="data">
+    <div class="mx-auto max-w-screen-sm my-5 px-4 py-8 bg-gradient-to-br h-fit shadow-xl shadow-gray-400 rounded-3xl"
+        [ngClass]="formatBgColor()">
 
-
-    <!-- Top Buttons start-->
-    <div class="flex items-center justify-between mx-9 mb-4 mt-2">
-        <ng-container *ngFor="let topButton of topButtons">
-            <button class="text-white text-lg font-medium">{{ topButton.title }}</button>
-        </ng-container>
-    </div>
-    <!-- Top Buttons end -->
-
-
-    <!-- Input Area start -->
-    <div class="flex flex-row justify-center my-4 space-x-8">
-
-        <!-- search box start -->
-        <div class="flex flex-row items-center justify-center space-x-4">
-            <input type="text"
-                class="text-xl font-normal py-2 px-5 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase rounded-3xl"
-                placeholder="Search for city...">
-            <i
-                class="uil uil-search font-medium text-2xl cursor-pointer transition ease-out hover:scale-125 text-white"></i>
-            <i
-                class="uil uil-location-point font-medium text-2xl cursor-pointer transition ease-out hover:scale-125 text-white"></i>
+        <!-- Top Buttons start-->
+        <div class="flex flex-wrap items-center justify-center content-around space-x-12 mx-9">
+            <ng-container *ngFor="let topButton of topButtons">
+                <button class="text-white text-lg font-medium transition ease-out hover:scale-125"
+                    (click)="fetchWeather(topButton.title)">
+                    {{ topButton.title }}</button>
+            </ng-container>
         </div>
-        <!-- search box end -->
+        <!-- Top Buttons end -->
 
-        <!-- Temperature units input start -->
-        <div class="flex flex-row items-center justify-center space-x-2">
-            <button name="metric"
-                class="text-xl text-white font-normal cursor-pointer transition ease-out hover:scale-125">°C</button>
-            <!-- <p class="text-2xl text-white font-medium">|</p> -->
-            <div class="w-[2px] bg-white h-3/5"></div>
-            <button name="imperial"
-                class="text-xl text-white font-normal cursor-pointer transition ease-out hover:scale-125">°F</button>
+
+        <!-- Input Area start -->
+        <div class="flex flex-row justify-center my-4 space-x-8">
+
+            <!-- search box + location start -->
+            <div class="flex flex-row items-center justify-center space-x-4">
+
+                <!-- search box start -->
+                <form class="flex flex-row items-center justify-center space-x-4" #form="ngForm"
+                    (ngSubmit)="form.valid&&fetchWeather(city.value)">
+                    <input type="text"
+                        class="text-xl font-normal py-2 px-5 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase rounded-3xl"
+                        placeholder="Search for city..." name="city" #city required>
+                    <button class="cursor-pointer transition ease-out hover:scale-125" type="submit">
+                        <i class="uil uil-search font-medium text-2xl text-white"></i></button>
+                </form>
+                <!-- search box end -->
+
+                <!-- location start -->
+                <button type="button" class="cursor-pointer transition ease-out hover:scale-125"
+                    (click)="handleLocationClick()">
+                    <i class="uil uil-location-point font-medium text-2xl text-white"></i></button>
+                <!-- location end -->
+
+            </div>
+            <!-- search box + location end -->
+
+            <!-- Temperature units input start -->
+            <div class="flex flex-row items-center justify-center space-x-2">
+                <button name="metric" (click)="fetchWeather(data.name)"
+                    class="text-xl text-white font-normal cursor-pointer transition ease-out hover:scale-125">°C</button>
+                <!-- <p class="text-2xl text-white font-medium">|</p> -->
+                <div class="w-[2px] bg-white h-3/5"></div>
+                <button name="imperial" (click)="fetchWeather(data.name,'imperial')"
+                    class="text-xl text-white font-normal cursor-pointer transition ease-out hover:scale-125">°F</button>
+            </div>
+            <!-- Temperature units input ends -->
+
         </div>
-        <!-- Temperature units input ends -->
-
-    </div>
-    <!-- Input Area end -->
+        <!-- Input Area end -->
 
 
-    <!-- Date, Time and Location conatiner start -->
-    <div class="flex flex-col items-center">
+        <!-- Date, Time and Location conatiner start -->
+        <div class="flex flex-col items-center">
 
-        <!-- Date and Time start -->
-        <div class="flex flex-row items-center justify-center my-4 space-x-2">
-            <div class="text-white font-light text-xl ">{{data.currentDate}}</div>
-            <div class="w-[2px] bg-white h-3/5 text-white font-thin">.</div>
-            <div class="text-white font-light text-xl ">{{data.currentTime}}</div>
+            <!-- Date and Time start -->
+            <div class="flex flex-row items-center justify-center my-4 space-x-2">
+                <div class="text-white font-light text-xl ">{{data.currentDate}}</div>
+                <div class="w-[2px] bg-white h-3/5 text-white font-thin">.</div>
+                <div class="text-white font-light text-xl ">{{data.currentTime}}</div>
+            </div>
+            <!-- Date and Time end -->
+
+            <!-- Location start -->
+            <div class="my-2 text-white font-semibold text-3xl">{{data.name}}, {{data.country}}</div>
+            <!-- Location end -->
+
         </div>
-        <!-- Date and Time end -->
-
-        <!-- Location start -->
-        <div class="my-2 text-white font-semibold text-3xl">{{data.name}}, {{data.country}}</div>
-        <!-- Location end -->
-
-    </div>
-    <!-- Date, Time and Location container end-->
+        <!-- Date, Time and Location container end-->
 
 
-    <!-- Current temperature and current details start -->
-    <div class="flex flex-col">
+        <!-- Current temperature and current details start -->
+        <div class="flex flex-col">
 
-        <!--current weather comment start -->
-        <div class="flex items-center justify-center py-4 text-xl text-cyan-300 capitalize">
-            {{data.description}}
-        </div>
-        <!--current weather comment end -->
+            <!--current weather comment start -->
+            <div class="flex items-center justify-center pt-4 text-xl capitalize" [ngClass]="formatTextColor()">
+                {{data.description}}
+            </div>
+            <!--current weather comment end -->
 
-        <!--current weather details start-->
-        <div class="flex flex-row items-center justify-around text-white py-2">
+            <!--current weather details start-->
+            <div class="flex flex-row items-center justify-around text-white pb-2">
 
-            <img src={{weatherIconUrl}} alt="current_weather_icon">
+                <img src={{fetchIcon(data.icon)}} alt="current_weather_icon">
 
-            <p class="text-5xl">{{data.temp | number: '1.0-0'}}<span class="text-3xl align-text-top"
-                    *ngIf="units == 'metric'">°C</span><span class="text-3xl align-text-top"
-                    *ngIf="units == 'imperial'">°F</span></p>
+                <p class="text-5xl">{{data.temp | number: '1.0-0'}}<span class="text-3xl align-text-top"
+                        *ngIf="units == 'metric'">°C</span><span class="text-3xl align-text-top"
+                        *ngIf="units == 'imperial'">°F</span></p>
 
-            <div class="flex flex-col flex-nowrap justify-between items-center text-white space-y-1">
+                <div class="flex flex-col flex-nowrap justify-between items-center text-white space-y-1">
 
-                <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
-                    <i class="uil uil-temperature-half text-lg "></i>
-                    <p class="text-sm">Feels like :</p>
-                    <p class="font-normal">{{data.feels_like | number: '1.0-0'}}°</p>
+                    <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
+                        <i class="uil uil-temperature-half text-lg "></i>
+                        <p class="text-sm">Feels like :</p>
+                        <p class="font-normal">{{data.feels_like | number: '1.0-0'}}°</p>
+                    </div>
+
+                    <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
+                        <i class="uil uil-tear text-lg "></i>
+                        <p class="text-sm">Humidty :</p>
+                        <p class="font-normal">{{data.humidity| number: '1.0-0'}}%</p>
+                    </div>
+
+                    <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
+                        <i class="uil uil-windsock text-lg"></i>
+                        <p class="text-sm">Wind :</p>
+                        <p class="font-normal">{{data.speed | number: '1.0-0'}}
+                            <span *ngIf="units == 'metric'"> m/s</span>
+                        </p>
+                        <span *ngIf="units == 'imperial'"> mph</span>
+                    </div>
+
                 </div>
+            </div>
+            <!--current weather details end-->
 
-                <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
-                    <i class="uil uil-tear text-lg "></i>
-                    <p class="text-sm">Humidty :</p>
-                    <p class="font-normal">{{data.humidity| number: '1.0-0'}}%</p>
-                </div>
+            <!-- Today's Sun rise/set time and max/min temp start -->
+            <div class="flex flex-row items-center justify-center space-x-3 text-white text-sm pb-2">
+                <i class="uil uil-sun"></i>
+                <p class="font-light">Rise : <span class="font-normal">{{data.sunRiseTime}}</span>
+                </p>
+                <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
+                <i class="uil uil-sunset"></i>
+                <p class="font-light">Set : <span class="font-normal">{{data.sunSetTime}}</span>
+                </p>
+                <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
+                <i class="uil uil-arrow-up"></i>
+                <p class="font-light">High : <span class="font-normal">{{data.temp_max | number: '1.0-0'}}°</span>
+                </p>
+                <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
+                <i class="uil uil-arrow-down"></i>
+                <p class="font-light">Low : <span class="font-normal">{{data.temp_min | number: '1.0-0'}}°</span>
+                </p>
+            </div>
+            <!-- Today's Sun rise/set time and max/min temp end -->
 
-                <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
-                    <i class="uil uil-windsock text-lg"></i>
-                    <p class="text-sm">Wind :</p>
-                    <p class="font-normal">{{data.speed | number: '1.0-0'}}
-                        <span *ngIf="units == 'metric'"> m/s</span>
-                    </p>
-                    <span *ngIf="units == 'imperial'"> mph</span>
-                </div>
+        </div>
+        <!-- Current temperature and current details end -->
+
+
+        <!-- Hourly Forcast start -->
+        <div class="flex flex-col mx-9">
+            <div class="flex items-center justify-start mt-4">
+                <p class="text-white font-medium uppercase">hourly forecast</p>
+            </div>
+            <hr class="my-1">
+            <div class="flex flex-row items-center justify-between text-white">
+
+                <ng-container *ngFor="let item of data.hourly">
+                    <div class="flex flex-col items-center justify-center">
+                        <p class="font-light text-sm">{{item.title}}</p>
+                        <img src={{fetchIcon(item.icon)}} alt="" class="w-[50px] h-[50px]">
+                        <p class="font-medium">{{item.temp | number: '1.0-0'}}°</p>
+                    </div>
+                </ng-container>
 
             </div>
         </div>
-        <!--current weather details end-->
+        <!-- Hourly Forcast end -->
 
-        <!-- Today's Sun rise/set time and max/min temp start -->
-        <div class="flex flex-row items-center justify-center space-x-3 text-white text-sm pb-2">
-            <i class="uil uil-sun"></i>
-            <p class="font-light">Rise : <span class="font-normal">{{data.sunRiseTime}}</span>
-            </p>
-            <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
-            <i class="uil uil-sunset"></i>
-            <p class="font-light">Set : <span class="font-normal">{{data.sunSetTime}}</span>
-            </p>
-            <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
-            <i class="uil uil-arrow-up"></i>
-            <p class="font-light">High : <span class="font-normal">{{data.temp_max | number: '1.0-0'}}°</span></p>
-            <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
-            <i class="uil uil-arrow-down"></i>
-            <p class="font-light">Low : <span class="font-normal">{{data.temp_min | number: '1.0-0'}}°</span></p>
+
+        <!-- Daily Forcast start -->
+        <div class="flex flex-col mx-9">
+            <div class="flex items-center justify-start mt-4">
+                <p class="text-white font-medium uppercase">daily forcast</p>
+            </div>
+            <hr class="my-1">
+            <div class="flex flex-row items-center justify-between text-white">
+
+                <ng-container *ngFor="let item of data.daily">
+
+
+                    <div class="flex flex-col items-center justify-center">
+                        <p class="font-light text-sm">{{item.title}}</p>
+                        <img src={{fetchIcon(item.icon)}} alt="" class="w-[50px] h-[50px]">
+                        <p class="font-medium">{{item.temp | number: '1.0-0'}}°</p>
+                    </div>
+
+                </ng-container>
+
+            </div>
         </div>
-        <!-- Today's Sun rise/set time and max/min temp end -->
+        <!-- Daily Forcast end -->
+
+
 
     </div>
-    <!-- Current temperature and current details end -->
 
+    <!-- Footer start -->
+    <footer class="flex justify-start items-center pl-4 mb-4 text-[#777] space-x-2">
 
-    <!-- Hourly Forcast start -->
-    <div class="flex flex-col mx-9">
-        <div class="flex items-center justify-start mt-4">
-            <p class="text-white font-medium uppercase">hourly forecast</p>
-        </div>
-        <hr class="my-1">
-        <div class="flex flex-row items-center justify-between text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="20" width="20" fill="#999999">
+            <path
+                d="M185.7 268.1h76.2l-38.1-91.6-38.1 91.6zM223.8 32L16 106.4l31.8 275.7 176 97.9 176-97.9 31.8-275.7zM354 373.8h-48.6l-26.2-65.4H168.6l-26.2 65.4H93.7L223.8 81.5z" />
+        </svg>
+        <span class=" text-[#777]">Project developed by Sachin Varghese</span>
 
-            <ng-container>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm">04:30 PM</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm">04:30 PM</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm">04:30 PM</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm">04:30 PM</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm">04:30 PM</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-            </ng-container>
-
-        </div>
-    </div>
-    <!-- Hourly Forcast end -->
-
-
-    <!-- Daily Forcast start -->
-    <div class="flex flex-col mx-9">
-        <div class="flex items-center justify-start mt-4">
-            <p class="text-white font-medium uppercase">daily forcast</p>
-        </div>
-        <hr class="my-1">
-        <div class="flex flex-row items-center justify-between text-white">
-
-            <ng-container>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm capitalize">wed</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm capitalize">thu</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm capitalize">fri</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm capitalize">sat</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <p class="font-light text-sm capitalize">sun</p>
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" class="w-[50px] h-[50px]">
-                    <p class="font-medium">22°</p>
-                </div>
-            </ng-container>
-
-        </div>
-    </div>
-    <!-- Daily Forcast end -->
-
+    </footer>
+    <!-- Footer end -->
 
 </div>
