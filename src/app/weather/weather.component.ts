@@ -24,9 +24,6 @@ export class WeatherComponent implements OnInit {
   fetchWeather = async (city: string, units: string = 'metric') => {
     this.toastr.info('Fetching weather info...');
 
-    // this.data = await this.wService.getFormattedWeatherData({ q: city, units: units });
-    // this.units = units;
-    // this.toastr.success('Successfully fetched info..');
     this.wService.getFormattedWeatherData({ q: city, units: units }).then((res) => {
       this.data = res;
       this.units = units;
@@ -113,5 +110,13 @@ export class WeatherComponent implements OnInit {
 
   getTopButtons() {
     return this.topButtons;
+  }
+
+  getData() {
+    return this.data;
+  }
+
+  fetchInputObject(inpObj:{city:string,units:string}) {
+    this.fetchWeather(inpObj.city,inpObj.units);
   }
 }

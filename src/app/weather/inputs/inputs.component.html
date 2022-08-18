@@ -1,1 +1,39 @@
-<p>inputs works!</p>
+<ng-container *ngIf="data">
+    <div class="flex flex-row justify-center my-4 space-x-8">
+
+        <!-- search box + location start -->
+        <div class="flex flex-row items-center justify-center space-x-4">
+
+            <!-- search box start -->
+            <form class="flex flex-row items-center justify-center space-x-4" #form="ngForm"
+                (ngSubmit)="form.valid&&fetchWeather(city.value)">
+                <input type="text"
+                    class="text-xl font-normal py-2 px-5 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase rounded-3xl"
+                    placeholder="Search for city..." name="city" #city required>
+                <button class="cursor-pointer transition ease-out hover:scale-125" type="submit">
+                    <i class="uil uil-search font-medium text-2xl text-white"></i></button>
+            </form>
+            <!-- search box end -->
+
+            <!-- location start -->
+            <button type="button" class="cursor-pointer transition ease-out hover:scale-125"
+                (click)="handleLocationClickChild()">
+                <i class="uil uil-location-point font-medium text-2xl text-white"></i></button>
+            <!-- location end -->
+
+        </div>
+        <!-- search box + location end -->
+
+        <!-- Temperature units input start -->
+        <div class="flex flex-row items-center justify-center space-x-2">
+            <button name="metric" (click)="fetchWeather(data.name)"
+                class="text-xl text-white font-normal cursor-pointer transition ease-out hover:scale-125">°C</button>
+            <!-- <p class="text-2xl text-white font-medium">|</p> -->
+            <div class="w-[2px] bg-white h-3/5"></div>
+            <button name="imperial" (click)="fetchWeather(data.name,'imperial')"
+                class="text-xl text-white font-normal cursor-pointer transition ease-out hover:scale-125">°F</button>
+        </div>
+        <!-- Temperature units input ends -->
+
+    </div>
+</ng-container>
