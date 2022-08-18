@@ -17,10 +17,10 @@ export class TopButtonsComponent implements OnInit {
   topButtons: topButton[] = [];
 
   @Output()
-  topButtonsClicked: EventEmitter<string> = new EventEmitter<string>();
+  topButtonClicked: EventEmitter<string> = new EventEmitter<string>();
 
   fetchWeather(city:string) {
-    this.topButtonsClicked.emit(city);
+    this.topButtonClicked.emit(city);
   }
 
 }

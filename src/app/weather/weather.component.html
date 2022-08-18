@@ -3,7 +3,7 @@
         [ngClass]="formatBgColor()">
 
         <!-- Top Buttons start-->
-        <app-top-buttons [topButtons]="getTopButtons()" (topButtonsClicked)="fetchWeather($event)">
+        <app-top-buttons [topButtons]="getTopButtons()" (topButtonClicked)="fetchWeather($event)">
         </app-top-buttons>
         <!-- Top Buttons end -->
 
