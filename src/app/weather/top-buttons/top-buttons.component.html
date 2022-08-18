@@ -1,0 +1,7 @@
+<div class="flex flex-wrap items-center justify-center content-around space-x-12 mx-9">
+    <ng-container *ngFor="let topButton of topButtons">
+        <button class="text-white text-lg font-medium transition ease-out hover:scale-125"
+            (click)="fetchWeather(topButton.title)">
+            {{ topButton.title }}</button>
+    </ng-container>
+</div>

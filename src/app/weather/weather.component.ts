@@ -110,4 +110,8 @@ export class WeatherComponent implements OnInit {
     id: 5,
     title: 'Paris'
   }]
+
+  getTopButtons() {
+    return this.topButtons;
+  }
 }

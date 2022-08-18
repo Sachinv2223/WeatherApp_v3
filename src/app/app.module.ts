@@ -11,11 +11,15 @@ import { HttpClientModule} from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateTime } from 'luxon';
+import { TopButtonsComponent } from './weather/top-buttons/top-buttons.component';
+import { InputsComponent } from './weather/inputs/inputs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WeatherComponent
+    WeatherComponent,
+    TopButtonsComponent,
+    InputsComponent
   ],
   imports: [
     BrowserModule,
