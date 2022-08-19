@@ -3,149 +3,36 @@
         [ngClass]="formatBgColor()">
 
         <!-- Top Buttons start-->
-        <app-top-buttons [topButtons]="getTopButtons()" (topButtonClicked)="fetchWeather($event)">
+        <app-top-buttons [topButtons]="topButtons" (topButtonClicked)="fetchWeather($event)">
         </app-top-buttons>
         <!-- Top Buttons end -->
 
 
         <!-- Input Area start -->
-        <app-inputs [data]="getData()" (inputObjectEmitted)="fetchInputObject($event)" (handleLocationClick)="handleLocationClick()"></app-inputs>
+        <app-inputs [data]="data" (inputObjectEmitted)="fetchInputObject($event)"
+            (handleLocationClick)="handleLocationClick()"></app-inputs>
         <!-- Input Area end -->
 
 
         <!-- Date, Time and Location conatiner start -->
-        <div class="flex flex-col items-center">
-
-            <!-- Date and Time start -->
-            <div class="flex flex-row items-center justify-center my-4 space-x-2">
-                <div class="text-white font-light text-xl ">{{data.currentDate}}</div>
-                <div class="w-[2px] bg-white h-3/5 text-white font-thin">.</div>
-                <div class="text-white font-light text-xl ">{{data.currentTime}}</div>
-            </div>
-            <!-- Date and Time end -->
-
-            <!-- Location start -->
-            <div class="my-2 text-white font-semibold text-3xl">{{data.name}}, {{data.country}}</div>
-            <!-- Location end -->
-
-        </div>
+        <app-date-time-location [data]="data"></app-date-time-location>
         <!-- Date, Time and Location container end-->
 
 
         <!-- Current temperature and current details start -->
-        <div class="flex flex-col">
-
-            <!--current weather comment start -->
-            <div class="flex items-center justify-center pt-4 text-xl capitalize" [ngClass]="formatTextColor()">
-                {{data.description}}
-            </div>
-            <!--current weather comment end -->
-
-            <!--current weather details start-->
-            <div class="flex flex-row items-center justify-around text-white pb-2">
-
-                <img src={{fetchIcon(data.icon)}} alt="current_weather_icon">
-
-                <p class="text-5xl">{{data.temp | number: '1.0-0'}}<span class="text-3xl align-text-top"
-                        *ngIf="units == 'metric'">°C</span><span class="text-3xl align-text-top"
-                        *ngIf="units == 'imperial'">°F</span></p>
-
-                <div class="flex flex-col flex-nowrap justify-between items-center text-white space-y-1">
-
-                    <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
-                        <i class="uil uil-temperature-half text-lg "></i>
-                        <p class="text-sm">Feels like :</p>
-                        <p class="font-normal">{{data.feels_like | number: '1.0-0'}}°</p>
-                    </div>
-
-                    <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
-                        <i class="uil uil-tear text-lg "></i>
-                        <p class="text-sm">Humidty :</p>
-                        <p class="font-normal">{{data.humidity| number: '1.0-0'}}%</p>
-                    </div>
-
-                    <div class="flex font-light items-center justify-center space-x-1 flex-nowrap">
-                        <i class="uil uil-windsock text-lg"></i>
-                        <p class="text-sm">Wind :</p>
-                        <p class="font-normal">{{data.speed | number: '1.0-0'}}
-                            <span *ngIf="units == 'metric'"> m/s</span>
-                        </p>
-                        <span *ngIf="units == 'imperial'"> mph</span>
-                    </div>
-
-                </div>
-            </div>
-            <!--current weather details end-->
-
-            <!-- Today's Sun rise/set time and max/min temp start -->
-            <div class="flex flex-row items-center justify-center space-x-3 text-white text-sm pb-2">
-                <i class="uil uil-sun"></i>
-                <p class="font-light">Rise : <span class="font-normal">{{data.sunRiseTime}}</span>
-                </p>
-                <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
-                <i class="uil uil-sunset"></i>
-                <p class="font-light">Set : <span class="font-normal">{{data.sunSetTime}}</span>
-                </p>
-                <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
-                <i class="uil uil-arrow-up"></i>
-                <p class="font-light">High : <span class="font-normal">{{data.temp_max | number: '1.0-0'}}°</span>
-                </p>
-                <div class="w-[1px] bg-white h-3/5 text-white font-thin text-[1px]">.</div>
-                <i class="uil uil-arrow-down"></i>
-                <p class="font-light">Low : <span class="font-normal">{{data.temp_min | number: '1.0-0'}}°</span>
-                </p>
-            </div>
-            <!-- Today's Sun rise/set time and max/min temp end -->
-
-        </div>
+        <app-current-temp-details [data]="data" [units]="units">
+        </app-current-temp-details>
         <!-- Current temperature and current details end -->
 
 
         <!-- Hourly Forcast start -->
-        <div class="flex flex-col mx-9">
-            <div class="flex items-center justify-start mt-4">
-                <p class="text-white font-medium uppercase">hourly forecast</p>
-            </div>
-            <hr class="my-1">
-            <div class="flex flex-row items-center justify-between text-white">
-
-                <ng-container *ngFor="let item of data.hourly">
-                    <div class="flex flex-col items-center justify-center">
-                        <p class="font-light text-sm">{{item.title}}</p>
-                        <img src={{fetchIcon(item.icon)}} alt="" class="w-[50px] h-[50px]">
-                        <p class="font-medium">{{item.temp | number: '1.0-0'}}°</p>
-                    </div>
-                </ng-container>
-
-            </div>
-        </div>
+        <app-forecast [title]="'hourly forecast'" [items]="data.hourly"></app-forecast>
         <!-- Hourly Forcast end -->
 
 
         <!-- Daily Forcast start -->
-        <div class="flex flex-col mx-9">
-            <div class="flex items-center justify-start mt-4">
-                <p class="text-white font-medium uppercase">daily forcast</p>
-            </div>
-            <hr class="my-1">
-            <div class="flex flex-row items-center justify-between text-white">
-
-                <ng-container *ngFor="let item of data.daily">
-
-
-                    <div class="flex flex-col items-center justify-center">
-                        <p class="font-light text-sm">{{item.title}}</p>
-                        <img src={{fetchIcon(item.icon)}} alt="" class="w-[50px] h-[50px]">
-                        <p class="font-medium">{{item.temp | number: '1.0-0'}}°</p>
-                    </div>
-
-                </ng-container>
-
-            </div>
-        </div>
+        <app-forecast [title]="'daily forecast'" [items]="data.daily"></app-forecast>
         <!-- Daily Forcast end -->
-
-
 
     </div>
 

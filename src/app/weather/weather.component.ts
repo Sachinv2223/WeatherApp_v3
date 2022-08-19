@@ -1,3 +1,4 @@
+import { Forecast } from './../model/weather.model';
 import { Component, OnInit } from '@angular/core';
 import { topButton } from 'src/app/model/topButton.model';
 import { WeatherData } from '../model/weather.model';
@@ -35,10 +36,6 @@ export class WeatherComponent implements OnInit {
     })
   }
 
-  fetchIcon = (icon: any) => {
-    return this.wService.getWeatherIcon(icon);
-  }
-
   handleLocationClick() {
     this.toastr.info('Fetching user location...');
     if (navigator.geolocation) {
@@ -71,22 +68,6 @@ export class WeatherComponent implements OnInit {
     }
   }
 
-  //* apply dynamic background using tailwind css class (check style.css)
-  formatTextColor() {
-    if (this.data) {
-      let threshold = this.units === 'metric' ? 20 : 68;
-      if (this.data?.temp <= threshold) {
-        return "coldText";
-      } else {
-        return "hotText";
-      }
-    }
-    else {
-      return "coldText";
-    }
-  }
-
-
   topButtons: topButton[] = [{
     id: 1,
     title: 'London'
@@ -108,15 +89,9 @@ export class WeatherComponent implements OnInit {
     title: 'Paris'
   }]
 
-  getTopButtons() {
-    return this.topButtons;
-  }
-
-  getData() {
-    return this.data;
-  }
-
   fetchInputObject(inpObj:{city:string,units:string}) {
     this.fetchWeather(inpObj.city,inpObj.units);
   }
+
+
 }

@@ -13,13 +13,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateTime } from 'luxon';
 import { TopButtonsComponent } from './weather/top-buttons/top-buttons.component';
 import { InputsComponent } from './weather/inputs/inputs.component';
+import { DateTimeLocationComponent } from './weather/date-time-location/date-time-location.component';
+import { CurrentTempDetailsComponent } from './weather/current-temp-details/current-temp-details.component';
+import { ForecastComponent } from './weather/forecast/forecast.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WeatherComponent,
     TopButtonsComponent,
-    InputsComponent
+    InputsComponent,
+    DateTimeLocationComponent,
+    CurrentTempDetailsComponent,
+    ForecastComponent
   ],
   imports: [
     BrowserModule,

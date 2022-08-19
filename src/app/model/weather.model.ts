@@ -20,17 +20,11 @@ export interface WeatherData {
   sunRiseTime: string
   sunSetTime: string
   timezone: string
-  daily: Daily[]
-  hourly: Hourly[]
+  daily: Forecast[]
+  hourly: Forecast[]
 }
 
-export interface Daily {
-  title: string
-  temp: number
-  icon: string
-}
-
-export interface Hourly {
+export interface Forecast {
   title: string
   temp: number
   icon: string

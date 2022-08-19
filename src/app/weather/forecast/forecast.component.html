@@ -1,0 +1,19 @@
+<ng-container *ngIf="items">
+    <div class="flex flex-col mx-9">
+        <div class="flex items-center justify-start mt-4">
+            <p class="text-white font-medium uppercase">{{title}}</p>
+        </div>
+        <hr class="my-1">
+        <div class="flex flex-row items-center justify-between text-white">
+
+            <ng-container *ngFor="let item of items">
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-light text-sm">{{item.title}}</p>
+                    <img src={{fetchIcon(item.icon)}} alt="" class="w-[50px] h-[50px]">
+                    <p class="font-medium">{{item.temp | number: '1.0-0'}}°</p>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</ng-container>

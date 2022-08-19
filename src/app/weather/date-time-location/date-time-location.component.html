@@ -1,0 +1,19 @@
+<ng-container *ngIf="data">
+
+    <div class="flex flex-col items-center">
+
+        <!-- Date and Time start -->
+        <div class="flex flex-row items-center justify-center my-4 space-x-2">
+            <div class="text-white font-light text-xl ">{{data.currentDate}}</div>
+            <div class="w-[2px] bg-white h-3/5 text-white font-thin">.</div>
+            <div class="text-white font-light text-xl ">{{data.currentTime}}</div>
+        </div>
+        <!-- Date and Time end -->
+
+        <!-- Location start -->
+        <div class="my-2 text-white font-semibold text-3xl">{{data.name}}, {{data.country}}</div>
+        <!-- Location end -->
+
+    </div>
+
+</ng-container>
